@@ -19,6 +19,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,19 @@
                 <td th:text="${tempCustomer.firstName}"/>
                 <td th:text="${tempCustomer.lastName}"/>
                 <td th:text="${tempCustomer.email}"/>
+                <td>
+                    <!-- Add "update" link -->
+                    <a th:href="@{/customers/showFormForUpdateCustomer(customerId=${tempCustomer.id})}">
+                        Update
+                    </a>
+
+                    <!-- Add "delete" link -->
+                    <a th:href="@{/customers/delete(customerId=${tempCustomer.id})}"
+                       onclick="if(!(confirm('Are you sure you want to delete this customer?'))) return false">
+                        Delete
+                    </a>
+
+                </td>
 
 
             </tr>
