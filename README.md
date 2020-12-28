@@ -9,6 +9,8 @@ This project based on the Spring Boot project and uses this Dependencies:
 * Hibernate Validator
 * Thymeleaf
 
+![1](https://i.ibb.co/mv37zst/1.png)
+![2](https://i.ibb.co/1rLc0FP/2.png)
 
 # Installation:
 The project is created with Maven, so you just need to import it to your IDE and build the project to resolve the dependencies
