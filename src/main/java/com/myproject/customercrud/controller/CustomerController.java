@@ -3,15 +3,27 @@ package com.myproject.customercrud.controller;
 import com.myproject.customercrud.dao.CustomerDAO;
 import com.myproject.customercrud.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerController {
+
+    // add an initBinder to trim input strings
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor =
+                new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
 
     CustomerDAO customerDAO;
 
@@ -61,7 +73,11 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public String saveCustomer(@ModelAttribute("customer") Customer theCustomer){
+    public String saveCustomer(@Valid @ModelAttribute("customer") Customer theCustomer,
+                               BindingResult theBindingResult){
+
+        // if BindingResult has errors return add/update customer form
+        if (theBindingResult.hasErrors()) return "customers/add-new-customer";
 
         // save customer
         customerDAO.save(theCustomer);
